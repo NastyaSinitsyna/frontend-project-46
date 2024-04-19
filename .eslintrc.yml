@@ -5,11 +5,17 @@ env:
 
 extends:
   - 'airbnb-base'
+  - 'plugin:jest/recommended'
+
+parserOptions:
+  ecmaVersion: 2020
 
 plugins:
   - import
+  - jest
 
 rules:
   no-console: 0
+  no-underscore-dangle: [2, { "allow": ["__filename", "__dirname"] }]
   import/extensions: 0
   quotes: 0
