@@ -6,3 +6,5 @@
 
 ## Watch asciinemas
 [![asciicast](https://asciinema.org/a/uh5qEARJV1lvTtdecnPhbiisD.png)](https://asciinema.org/a/uh5qEARJV1lvTtdecnPhbiisD)
+
+[![asciicast](https://asciinema.org/a/4EAP7M2si3KHqKFOEquhb9ViM.png)](https://asciinema.org/a/4EAP7M2si3KHqKFOEquhb9ViM)
