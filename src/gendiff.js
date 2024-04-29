@@ -1,15 +1,10 @@
-import fs from 'node:fs';
-import path from 'node:path';
 import _ from 'lodash';
 
-import fileParse from './parse.js';
+import fileParse from './parsers.js';
 
 export default (filepath1, filepath2) => {
-  const absFilepath1 = path.resolve(process.cwd(), filepath1);
-  const absFilepath2 = path.resolve(process.cwd(), filepath2);
-
-  const content1 = fileParse(fs.readFileSync(absFilepath1, 'utf8'));
-  const content2 = fileParse(fs.readFileSync(absFilepath2, 'utf8'));
+  const content1 = fileParse(filepath1);
+  const content2 = fileParse(filepath2);
 
   const keys1 = Object.keys(content1).sort();
   const keys2 = Object.keys(content2).sort();
