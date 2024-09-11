@@ -1,5 +1,5 @@
 #!/usr/bin/env node
 
-import gendiff from '../src/cli.js';
+import gendiff from '../index.js';
 
 gendiff();

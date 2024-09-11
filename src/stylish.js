@@ -1,17 +1,24 @@
+import { makeDiff } from './gendiff.js';
+
 const diffToObj = (data) => {
   const diffAsObj = data.reduce((acc, [key, value1, value2]) => {
     let specSymbol;
+    if (typeof value1 === 'object' && typeof value2 === 'object') {
+      specSymbol = '  ';
+      acc[`${specSymbol}${key}`] = diffToObj(makeDiff(value1, value2));
+      return acc;
+    }
     if (value1 === value2) {
       specSymbol = '  ';
       acc[`${specSymbol}${key}`] = value1;
       return acc;
-    } if (!value2) {
-      specSymbol = '- ';
-      acc[`${specSymbol}${key}`] = value1;
-      return acc;
-    } if (!value1) {
+    } if (value1 === undefined) {
       specSymbol = '+ ';
       acc[`${specSymbol}${key}`] = value2;
+      return acc;
+    } if (value2 === undefined) {
+      specSymbol = '- ';
+      acc[`${specSymbol}${key}`] = value1;
       return acc;
     }
     specSymbol = '- ';
@@ -20,6 +27,7 @@ const diffToObj = (data) => {
     acc[`${specSymbol}${key}`] = value2;
     return acc;
   }, {});
+  //console.log(diffAsObj);
   return diffAsObj;
 };
 

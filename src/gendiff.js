@@ -2,15 +2,9 @@ import _ from 'lodash';
 
 import fileParse from './parsers.js';
 
-import stylish from './stylish.js';
-
-export default (filepath1, filepath2) => {
-  const content1 = fileParse(filepath1);
-  const content2 = fileParse(filepath2);
-
-  const keys1 = Object.keys(content1).sort();
-  const keys2 = Object.keys(content2).sort();
-
+export const makeDiff =  (content1, content2) => {
+  const keys1 = Object.keys(content1);
+  const keys2 = Object.keys(content2);
   const sortedContent1 = keys1.reduce((acc, key1) => {
     acc[key1] = content1[key1];
     return acc;
@@ -19,17 +13,20 @@ export default (filepath1, filepath2) => {
     acc[key2] = content2[key2];
     return acc;
   }, {});
-  const diffKeys = _.union(keys1, keys2);
-
+  const diffKeys = _.union(keys1, keys2).sort();
   const diff = diffKeys.reduce((acc, diffKey) => {
     const value1 = sortedContent1[diffKey];
     const value2 = sortedContent2[diffKey];
     acc.push([diffKey, value1, value2]);
     return acc;
   }, []);
+  return diff;
+};
+
+export default (filepath1, filepath2) => {
+  const content1 = fileParse(filepath1);
+  const content2 = fileParse(filepath2);
+  const diff = makeDiff(content1, content2);
   console.log(diff);
-
-  const formattedDiff = stylish(diff);
-
-  return formattedDiff;
+  return diff;
 };

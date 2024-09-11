@@ -1,14 +1,21 @@
 import { program } from 'commander';
+
 import gendiff from './gendiff.js';
+
+import stylish from './stylish.js';
 
 export default () => {
   program
     .description(`Compares two configuration files and shows a difference.`)
     .version('0.0.1', '-V, --version', 'output the current version')
     .arguments('<filepath1> <filepath2>')
-    .option('-f, --format <type>', 'output format')
-    .action((filepath1, filepath2) => {
-      console.log(gendiff(filepath1, filepath2));
+    .option('-f, --format <type>', 'output format', 'stylish')
+    .action(function (filepath1, filepath2) {
+      if (this.opts().format === 'stylish') {
+        console.log(stylish(gendiff(filepath1, filepath2)));
+      } else {
+        console.log('error: unknown format');
+      }
     });
 
   return program.parse();
