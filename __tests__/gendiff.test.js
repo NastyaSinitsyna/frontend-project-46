@@ -1,8 +1,8 @@
 import path from 'node:path';
 import { expect, test } from '@jest/globals';
 import url from 'url';
-import gendiff from '../index.js';
-//import gendiff from '../src/cli.js';
+import gendiff from '../src/gendiff.js';
+import stylish from '../src/stylish.js';
 
 const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -75,13 +75,17 @@ const diff2 = `{
   + verbose: true
 }`;
 
+const diffJson1 = stylish(gendiff(jsonFilepath1, jsonFilepath2));
+const diffYAML1 = stylish(gendiff(yamlFilepath1, yamlFilepath2));
 test('gendiff', () => {
-  expect(gendiff(jsonFilepath1, jsonFilepath2)).toBe(diff1);
-  expect(gendiff(yamlFilepath1, yamlFilepath2)).toBe(diff1);
+  expect(diffJson1).toBe(diff1);
+  expect(diffYAML1).toBe(diff1);
 });
 
 // for plain files
+const diffJson2 = stylish(gendiff(jsonFilepath3, jsonFilepath4));
+const diffYAML2 = stylish(gendiff(yamlFilepath3, yamlFilepath4));
 test('gendiff2', () => {
-  expect(gendiff(jsonFilepath3, jsonFilepath4)).toBe(diff2);
-  expect(gendiff(yamlFilepath3, yamlFilepath4)).toBe(diff2);
+  expect(diffJson2).toBe(diff2);
+  expect(diffYAML2).toBe(diff2);
 });
