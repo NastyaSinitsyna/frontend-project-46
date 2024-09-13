@@ -30,4 +30,3 @@ export default (data, replacer = ' ', spacesCount = 4) => {
 
   return iter(data, 1);
 };
-
