@@ -1,37 +1,4 @@
-// import { makeDiff } from './gendiff.js';
-
-// const diffToObj = (data) => {
-//   const diffAsObj = data.reduce((acc, [key, value1, value2]) => {
-//     let specSymbol;
-//     if (typeof value1 === 'object' && typeof value2 === 'object') {
-//       specSymbol = '  ';
-//       acc[`${specSymbol}${key}`] = diffToObj(makeDiff(value1, value2));
-//       return acc;
-//     }
-//     if (value1 === value2) {
-//       specSymbol = '  ';
-//       acc[`${specSymbol}${key}`] = value1;
-//       return acc;
-//     } if (value1 === undefined) {
-//       specSymbol = '+ ';
-//       acc[`${specSymbol}${key}`] = value2;
-//       return acc;
-//     } if (value2 === undefined) {
-//       specSymbol = '- ';
-//       acc[`${specSymbol}${key}`] = value1;
-//       return acc;
-//     }
-//     specSymbol = '- ';
-//     acc[`${specSymbol}${key}`] = value1;
-//     specSymbol = '+ ';
-//     acc[`${specSymbol}${key}`] = value2;
-//     return acc;
-//   }, {});
-//   console.log({ diffAsObj });
-//   return diffAsObj;
-// };
-
-const stringify = (data, replacer = ' ', spacesCount = 4) => {
+export default (data, replacer = ' ', spacesCount = 4) => {
   const iter = (currentData, level) => {
     const dataType = typeof currentData;
     if (dataType !== 'object' || currentData === null) {
@@ -64,4 +31,3 @@ const stringify = (data, replacer = ' ', spacesCount = 4) => {
   return iter(data, 1);
 };
 
-export default (data) => stringify(data);
