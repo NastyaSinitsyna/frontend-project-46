@@ -4,6 +4,8 @@ import gendiff from './gendiff.js';
 
 import stylish from './stylish.js';
 
+import plain from './plain.js';
+
 export default () => {
   program
     .description(`Compares two configuration files and shows a difference.`)
@@ -13,6 +15,8 @@ export default () => {
     .action(function (filepath1, filepath2) {
       if (this.opts().format === 'stylish') {
         console.log(stylish(gendiff(filepath1, filepath2)));
+      } else if (this.opts().format === 'plain') {
+        console.log(plain(gendiff(filepath1, filepath2)));
       } else {
         console.log('error: unknown format');
       }
