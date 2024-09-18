@@ -2,9 +2,9 @@ import { program } from 'commander';
 
 import gendiff from './gendiff.js';
 
-import stylish from './stylish.js';
+import stylish from '../formatters/stylish.js';
 
-import plain from './plain.js';
+import plain from '../formatters/plain.js';
 
 export default () => {
   program

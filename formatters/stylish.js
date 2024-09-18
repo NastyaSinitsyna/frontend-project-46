@@ -1,4 +1,4 @@
-import { findDiff } from './gendiff.js';
+import { findDiff } from '../src/gendiff.js';
 
 const formObjDiff = (data) => {
   const diffAsObj = data.reduce((acc, { diffKey, preValue, curValue }) => {
@@ -30,7 +30,7 @@ const formObjDiff = (data) => {
   return diffAsObj;
 };
 
-const stylish = (data, replacer = ' ', spacesCount = 4) => {
+const stringify = (data, replacer = ' ', spacesCount = 4) => {
   const iter = (currentData, level) => {
     const dataType = typeof currentData;
     if (dataType !== 'object' || currentData === null) {
@@ -63,4 +63,4 @@ const stylish = (data, replacer = ' ', spacesCount = 4) => {
   return iter(data, 1);
 };
 
-export default (data) => stylish(formObjDiff(data));
+export default (data) => stringify(formObjDiff(data));

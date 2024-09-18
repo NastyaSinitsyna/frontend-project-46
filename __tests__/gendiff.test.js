@@ -2,8 +2,8 @@ import path from 'node:path';
 import { expect, test } from '@jest/globals';
 import url from 'url';
 import gendiff from '../src/gendiff.js';
-import stylish from '../src/stylish.js';
-import plain from '../src/plain.js';
+import stylish from '../formatters/stylish.js';
+import plain from '../formatters/plain.js';
 
 const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
