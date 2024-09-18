@@ -21,7 +21,7 @@ export default () => {
         console.log(plain(gendiff(filepath1, filepath2)));
       } else if (this.opts().format === 'json') {
         console.log(json(gendiff(filepath1, filepath2)));
-      }else {
+      } else {
         console.log('error: unknown format');
       }
     });
