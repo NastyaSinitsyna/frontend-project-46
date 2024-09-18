@@ -6,6 +6,8 @@ import stylish from '../formatters/stylish.js';
 
 import plain from '../formatters/plain.js';
 
+import json from '../formatters/json.js';
+
 export default () => {
   program
     .description(`Compares two configuration files and shows a difference.`)
@@ -17,7 +19,9 @@ export default () => {
         console.log(stylish(gendiff(filepath1, filepath2)));
       } else if (this.opts().format === 'plain') {
         console.log(plain(gendiff(filepath1, filepath2)));
-      } else {
+      } else if (this.opts().format === 'json') {
+        console.log(json(gendiff(filepath1, filepath2)));
+      }else {
         console.log('error: unknown format');
       }
     });
