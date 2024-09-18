@@ -1,4 +1,4 @@
-import { findDiff } from './gendiff.js';
+import { findDiff } from '../src/gendiff.js';
 
 const getFullKey = (root, coll) => {
   const entries = Object.entries(coll);
