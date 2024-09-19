@@ -24,7 +24,8 @@ export default () => {
       } else {
         console.log('error: unknown format');
       }
-    });
+    })
+    .parse(process.argv);
 
-  return program.parse(process.argv);
+  return program.parse();
 };
