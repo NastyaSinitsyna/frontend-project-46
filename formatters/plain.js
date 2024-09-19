@@ -1,6 +1,6 @@
 import { findDiff } from '../src/gendiff.js';
 
-const getFullKey = (root, coll) => {
+export const getFullKey = (root, coll) => {
   const entries = Object.entries(coll);
   const newColl = entries.reduce((acc, [key, value]) => {
     acc[`${root}.${key}`] = value;

@@ -2,29 +2,22 @@ import { findDiff } from '../src/gendiff.js';
 
 const formObjDiff = (data) => {
   const diffAsObj = data.reduce((acc, { diffKey, preValue, curValue }) => {
-    let specSymbol;
     if (typeof preValue === 'object' && typeof curValue === 'object') {
-      specSymbol = '  ';
-      acc[`${specSymbol}${diffKey}`] = formObjDiff(findDiff(preValue, curValue));
+      acc[`  ${diffKey}`] = formObjDiff(findDiff(preValue, curValue));
       return acc;
     }
     if (preValue === curValue) {
-      specSymbol = '  ';
-      acc[`${specSymbol}${diffKey}`] = preValue;
+      acc[`  ${diffKey}`] = preValue;
       return acc;
     } if (preValue === undefined) {
-      specSymbol = '+ ';
-      acc[`${specSymbol}${diffKey}`] = curValue;
+      acc[`+ ${diffKey}`] = curValue;
       return acc;
     } if (curValue === undefined) {
-      specSymbol = '- ';
-      acc[`${specSymbol}${diffKey}`] = preValue;
+      acc[`- ${diffKey}`] = preValue;
       return acc;
     }
-    specSymbol = '- ';
-    acc[`${specSymbol}${diffKey}`] = preValue;
-    specSymbol = '+ ';
-    acc[`${specSymbol}${diffKey}`] = curValue;
+    acc[`- ${diffKey}`] = preValue;
+    acc[`+ ${diffKey}`] = curValue;
     return acc;
   }, {});
   return diffAsObj;
