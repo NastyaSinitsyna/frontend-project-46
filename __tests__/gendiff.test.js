@@ -4,6 +4,7 @@ import url from 'url';
 import gendiff from '../src/gendiff.js';
 import stylish from '../formatters/stylish.js';
 import plain from '../formatters/plain.js';
+import json from '../formatters/json.js';
 
 const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -112,6 +113,107 @@ test('should return diff of plain files in plain format', () => {
 Property 'proxy' was removed
 Property 'timeout' was updated. From 50 to 20
 Property 'verbose' was added with value: true`;
+  expect(diffJson).toBe(expectedDiff);
+  expect(diffYAML).toBe(expectedDiff);
+});
+
+test('should return diff of nested files in json format', () => {
+  const diffJson = json(gendiff(jsonFilepath1, jsonFilepath2));
+  const diffYAML = json(gendiff(yamlFilepath1, yamlFilepath2));
+  const expectedDiff = `{
+  "diffKey": "common",
+  "preValue": {
+    "setting1": "Value 1",
+    "setting2": 200,
+    "setting3": true,
+    "setting6": {
+      "key": "value",
+      "doge": {
+        "wow": ""
+      }
+    }
+  },
+  "curValue": {
+    "follow": false,
+    "setting1": "Value 1",
+    "setting3": null,
+    "setting4": "blah blah",
+    "setting5": {
+      "key5": "value5"
+    },
+    "setting6": {
+      "key": "value",
+      "ops": "vops",
+      "doge": {
+        "wow": "so much"
+      }
+    }
+  }
+};
+{
+  "diffKey": "group1",
+  "preValue": {
+    "baz": "bas",
+    "foo": "bar",
+    "nest": {
+      "key": "value"
+    }
+  },
+  "curValue": {
+    "foo": "bar",
+    "baz": "bars",
+    "nest": "str"
+  }
+};
+{
+  "diffKey": "group2",
+  "preValue": {
+    "abc": 12345,
+    "deep": {
+      "id": 45
+    }
+  }
+};
+{
+  "diffKey": "group3",
+  "curValue": {
+    "deep": {
+      "id": {
+        "number": 45
+      }
+    },
+    "fee": 100500
+  }
+}`;
+  expect(diffJson).toBe(expectedDiff);
+  expect(diffYAML).toBe(expectedDiff);
+});
+
+test('should return diff of plain files in json format', () => {
+  const diffJson = json(gendiff(jsonFilepath3, jsonFilepath4));
+  const diffYAML = json(gendiff(yamlFilepath3, yamlFilepath4));
+  const expectedDiff = `{
+  "diffKey": "follow",
+  "preValue": false
+};
+{
+  "diffKey": "host",
+  "preValue": "hexlet.io",
+  "curValue": "hexlet.io"
+};
+{
+  "diffKey": "proxy",
+  "preValue": "123.234.53.22"
+};
+{
+  "diffKey": "timeout",
+  "preValue": 50,
+  "curValue": 20
+};
+{
+  "diffKey": "verbose",
+  "curValue": true
+}`;
   expect(diffJson).toBe(expectedDiff);
   expect(diffYAML).toBe(expectedDiff);
 });
