@@ -1,7 +1,7 @@
 import path from 'node:path';
 import { expect, test } from '@jest/globals';
 import url from 'url';
-import gendiff from '../src/gendiff.js';
+import gendiff from '../index.js';
 import stylish from '../formatters/stylish.js';
 import plain from '../formatters/plain.js';
 import json from '../formatters/json.js';
