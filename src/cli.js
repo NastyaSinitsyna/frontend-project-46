@@ -1,9 +1,5 @@
 import { program } from 'commander';
 
-// import gendiff from './gendiff.js';
-// import stylish from '../formatters/stylish.js';
-// import plain from '../formatters/plain.js';
-// import json from '../formatters/json.js';
 import getFormatDiff from '../formatters/index.js';
 
 export default () => {
@@ -18,7 +14,4 @@ export default () => {
       console.log(getFormatDiff(filepath1, filepath2, format));
     })
     .parse(process.argv);
-  // const { args } = program;
-  // const options = program.opts();
-  // const { format } = options;
 };
