@@ -1,9 +1,9 @@
-import { findDiff } from '../src/gendiff.js';
+import gendiff from '../gendiff.js';
 
 const formObjDiff = (data) => {
   const diffAsObj = data.reduce((acc, { diffKey, preValue, curValue }) => {
     if (typeof preValue === 'object' && typeof curValue === 'object') {
-      acc[`  ${diffKey}`] = formObjDiff(findDiff(preValue, curValue));
+      acc[`  ${diffKey}`] = formObjDiff(gendiff(preValue, curValue));
       return acc;
     }
     if (preValue === curValue) {

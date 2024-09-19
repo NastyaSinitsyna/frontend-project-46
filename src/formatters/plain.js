@@ -1,4 +1,4 @@
-import { findDiff } from '../src/gendiff.js';
+import gendiff from '../gendiff.js';
 
 export const getFullKey = (root, coll) => {
   const entries = Object.entries(coll);
@@ -23,7 +23,7 @@ const plain = (data) => {
   const diff = data.reduce((acc, dataItem) => {
     const { diffKey, preValue, curValue } = dataItem;
     if (typeof curValue === 'object' && typeof preValue === 'object') {
-      const newData = findDiff(getFullKey(diffKey, preValue), getFullKey(diffKey, curValue));
+      const newData = gendiff(getFullKey(diffKey, preValue), getFullKey(diffKey, curValue));
       acc.push(plain(newData));
     } else if (preValue === undefined) {
       acc.push(`Property '${diffKey}' was added with value: ${formatValue(curValue)}`);

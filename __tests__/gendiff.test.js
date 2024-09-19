@@ -2,14 +2,15 @@ import path from 'node:path';
 import { expect, test } from '@jest/globals';
 import url from 'url';
 import gendiff from '../index.js';
-import stylish from '../formatters/stylish.js';
-import plain from '../formatters/plain.js';
-import json from '../formatters/json.js';
+// import stylish from '../formatters/stylish.js';
+// import plain from '../formatters/plain.js';
+// import json from '../formatters/json.js';
 
 const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
+
 const jsonFilepath1 = getFixturePath('file1.json');
 const jsonFilepath2 = getFixturePath('file2.json');
 // for plain files JSON
@@ -23,8 +24,8 @@ const yamlFilepath3 = getFixturePath('file3.yml');
 const yamlFilepath4 = getFixturePath('file4.yml');
 
 test('should return diff of nested files in stylish format', () => {
-  const diffJson = stylish(gendiff(jsonFilepath1, jsonFilepath2));
-  const diffYAML = stylish(gendiff(yamlFilepath1, yamlFilepath2));
+  const diffJson = gendiff(jsonFilepath1, jsonFilepath2, 'stylish');
+  const diffYAML = gendiff(yamlFilepath1, yamlFilepath2, 'stylish');
   const expectedDiff = `{
     common: {
       + follow: false
@@ -74,8 +75,8 @@ test('should return diff of nested files in stylish format', () => {
 });
 
 test('should return diff of plain files in stylish format', () => {
-  const diffJson = stylish(gendiff(jsonFilepath3, jsonFilepath4));
-  const diffYAML = stylish(gendiff(yamlFilepath3, yamlFilepath4));
+  const diffJson = gendiff(jsonFilepath3, jsonFilepath4, 'stylish');
+  const diffYAML = gendiff(yamlFilepath3, yamlFilepath4, 'stylish');
   const expectedDiff = `{
   - follow: false
     host: hexlet.io
@@ -89,8 +90,8 @@ test('should return diff of plain files in stylish format', () => {
 });
 
 test('should return diff of nested files in plain format', () => {
-  const diffJson = plain(gendiff(jsonFilepath1, jsonFilepath2));
-  const diffYAML = plain(gendiff(yamlFilepath1, yamlFilepath2));
+  const diffJson = gendiff(jsonFilepath1, jsonFilepath2, 'plain');
+  const diffYAML = gendiff(yamlFilepath1, yamlFilepath2, 'plain');
   const expectedDiff = `Property 'common.follow' was added with value: false
 Property 'common.setting2' was removed
 Property 'common.setting3' was updated. From true to null
@@ -107,8 +108,8 @@ Property 'group3' was added with value: [complex value]`;
 });
 
 test('should return diff of plain files in plain format', () => {
-  const diffJson = plain(gendiff(jsonFilepath3, jsonFilepath4));
-  const diffYAML = plain(gendiff(yamlFilepath3, yamlFilepath4));
+  const diffJson = gendiff(jsonFilepath3, jsonFilepath4, 'plain');
+  const diffYAML = gendiff(yamlFilepath3, yamlFilepath4, 'plain');
   const expectedDiff = `Property 'follow' was removed
 Property 'proxy' was removed
 Property 'timeout' was updated. From 50 to 20
@@ -118,8 +119,8 @@ Property 'verbose' was added with value: true`;
 });
 
 test('should return diff of nested files in json format', () => {
-  const diffJson = json(gendiff(jsonFilepath1, jsonFilepath2));
-  const diffYAML = json(gendiff(yamlFilepath1, yamlFilepath2));
+  const diffJson = gendiff(jsonFilepath1, jsonFilepath2, 'json');
+  const diffYAML = gendiff(yamlFilepath1, yamlFilepath2, 'json');
   const expectedDiff = `{
   "diffKey": "common",
   "preValue": {
@@ -190,8 +191,8 @@ test('should return diff of nested files in json format', () => {
 });
 
 test('should return diff of plain files in json format', () => {
-  const diffJson = json(gendiff(jsonFilepath3, jsonFilepath4));
-  const diffYAML = json(gendiff(yamlFilepath3, yamlFilepath4));
+  const diffJson = gendiff(jsonFilepath3, jsonFilepath4, 'json');
+  const diffYAML = gendiff(yamlFilepath3, yamlFilepath4, 'json');
   const expectedDiff = `{
   "diffKey": "follow",
   "preValue": false

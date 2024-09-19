@@ -2,7 +2,7 @@
 
 import { program } from 'commander';
 
-import getFormatDiff from '../formatters/index.js';
+import gendiff from '../index.js';
 
 program
   .description(`Compares two configuration files and shows a difference.`)
@@ -12,7 +12,7 @@ program
   .action((filepath1, filepath2) => {
     const options = program.opts();
     const { format } = options;
-    console.log(getFormatDiff(filepath1, filepath2, format));
+    console.log(gendiff(filepath1, filepath2, format));
   });
 
 program.parse(process.argv);

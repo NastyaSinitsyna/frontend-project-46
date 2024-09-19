@@ -1,8 +1,8 @@
 import _ from 'lodash';
 
-import fileParse from './parsers.js';
+// import fileParse from './parsers.js';
 
-export const findDiff = (content1, content2) => {
+export default (content1, content2) => {
   const keys1 = Object.keys(content1);
   const keys2 = Object.keys(content2);
   const sortedContent1 = keys1.reduce((acc, key1) => {
@@ -23,9 +23,9 @@ export const findDiff = (content1, content2) => {
   return diff;
 };
 
-export default (filepath1, filepath2) => {
-  const content1 = fileParse(filepath1);
-  const content2 = fileParse(filepath2);
-  const diff = findDiff(content1, content2);
-  return diff;
-};
+// export default (filepath1, filepath2) => {
+//   const content1 = fileParse(filepath1);
+//   const content2 = fileParse(filepath2);
+//   const diff = findDiff(content1, content2);
+//   return diff;
+// };
