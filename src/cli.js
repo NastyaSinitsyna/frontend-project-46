@@ -26,5 +26,5 @@ export default () => {
       }
     });
 
-  return program.parse();
+  return program.parse(process.argv);
 };
