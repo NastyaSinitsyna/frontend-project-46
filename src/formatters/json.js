@@ -3,6 +3,6 @@ const json = (data) => {
     acc.push(JSON.stringify(dataItem));
     return acc;
   }, []);
-  return result.join(',\n');
+  return result.join('\n');
 };
 export default json;
