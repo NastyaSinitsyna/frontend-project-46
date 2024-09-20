@@ -1,7 +1,5 @@
 import _ from 'lodash';
 
-// import fileParse from './parsers.js';
-
 export default (content1, content2) => {
   const keys1 = Object.keys(content1);
   const keys2 = Object.keys(content2);
@@ -17,15 +15,8 @@ export default (content1, content2) => {
   const diff = diffKeys.reduce((acc, diffKey) => {
     const preValue = sortedContent1[diffKey];
     const curValue = sortedContent2[diffKey];
-    acc.push({ diffKey, preValue, curValue });
+    acc[`${diffKey}Diff`] = { diffKey, preValue, curValue };
     return acc;
-  }, []);
+  }, {});
   return diff;
 };
-
-// export default (filepath1, filepath2) => {
-//   const content1 = fileParse(filepath1);
-//   const content2 = fileParse(filepath2);
-//   const diff = findDiff(content1, content2);
-//   return diff;
-// };

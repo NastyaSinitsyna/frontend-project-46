@@ -19,8 +19,9 @@ const formatValue = (value) => {
   return value;
 };
 
-const plain = (data) => {
-  const diff = data.reduce((acc, dataItem) => {
+const plain = (diff) => {
+  const data = Object.values(diff);
+  const fomattedDiff = data.reduce((acc, dataItem) => {
     const { diffKey, preValue, curValue } = dataItem;
     if (typeof curValue === 'object' && typeof preValue === 'object') {
       const newData = gendiff(getFullKey(diffKey, preValue), getFullKey(diffKey, curValue));
@@ -34,7 +35,7 @@ const plain = (data) => {
     }
     return acc;
   }, []);
-  const result = diff.join(`\n`);
+  const result = fomattedDiff.join(`\n`);
   return result;
 };
 
