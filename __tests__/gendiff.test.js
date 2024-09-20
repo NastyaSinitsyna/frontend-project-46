@@ -23,6 +23,7 @@ const yamlFilepath2 = getFixturePath('file2.yml');
 const yamlFilepath3 = getFixturePath('file3.yml');
 const yamlFilepath4 = getFixturePath('file4.yml');
 
+
 test('should return diff of nested files in stylish format', () => {
   const diffJson = gendiff(jsonFilepath1, jsonFilepath2, 'stylish');
   const diffYAML = gendiff(yamlFilepath1, yamlFilepath2, 'stylish');
@@ -119,33 +120,33 @@ Property 'verbose' was added with value: true`;
 });
 
 // test('should return diff of nested files in json format', () => {
-//   const diffJson = gendiff(jsonFilepath1, jsonFilepath2, 'json');
-//   const diffYAML = gendiff(yamlFilepath1, yamlFilepath2, 'json');
-//   const expectedDiff = `{
-//   "diffKey": "common",
-//   "preValue": {
-//     "setting1": "Value 1",
-//     "setting2": 200,
-//     "setting3": true,
-//     "setting6": {
-//       "key": "value",
-//       "doge": {
-//         "wow": ""
-//       }
-//     }
-//   },
-//   "curValue": {
-//     "follow": false,
-//     "setting1": "Value 1",
-//     "setting3": null,
-//     "setting4": "blah blah",
-//     "setting5": {
-//       "key5": "value5"
-//     },
-//     "setting6": {
-//       "key": "value",
-//       "ops": "vops",
-//       "doge": {
+  // const diffJson = gendiff(jsonFilepath1, jsonFilepath2, 'json');
+  // const diffYAML = gendiff(yamlFilepath1, yamlFilepath2, 'json');
+  // const expectedDiff = `{
+  // "diffKey": "common",
+  // "preValue": {
+  //   "setting1": "Value 1",
+  //   "setting2": 200,
+  //   "setting3": true,
+  //   "setting6": {
+  //     "key": "value",
+  //     "doge": {
+  //       "wow": ""
+  //     }
+  //   }
+  // },
+  // "curValue": {
+  //   "follow": false,
+  //   "setting1": "Value 1",
+  //   "setting3": null,
+  //   "setting4": "blah blah",
+  //   "setting5": {
+  //     "key5": "value5"
+  //   },
+  //   "setting6": {
+  //     "key": "value",
+  //     "ops": "vops",
+  //     "doge": {
 //         "wow": "so much"
 //       }
 //     }
