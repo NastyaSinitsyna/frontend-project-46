@@ -8,7 +8,7 @@ import plain from './plain.js';
 
 import json from './json.js';
 
-export default (filepath1, filepath2, format) => {
+export default (filepath1, filepath2, format = 'stylish') => {
   const content1 = fileParse(filepath1);
   const content2 = fileParse(filepath2);
   if (format === 'stylish') {
