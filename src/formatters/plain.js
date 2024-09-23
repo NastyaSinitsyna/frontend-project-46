@@ -35,7 +35,7 @@ const plain = (diff) => {
     }
     return acc;
   }, []);
-  const result = fomattedDiff.join(`\n`);
+  const result = fomattedDiff.join('\n');
   return result;
 };
 
