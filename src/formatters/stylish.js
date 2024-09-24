@@ -4,22 +4,16 @@ const formObjDiff = (diff) => {
   const data = Object.values(diff);
   const diffAsObj = data.reduce((acc, { diffKey, preValue, curValue }) => {
     if (typeof preValue === 'object' && typeof curValue === 'object') {
-      acc[`  ${diffKey}`] = formObjDiff(gendiff(preValue, curValue));
-      return acc;
+      return { ...acc, [`  ${diffKey}`]: formObjDiff(gendiff(preValue, curValue)) };
     }
     if (preValue === curValue) {
-      acc[`  ${diffKey}`] = preValue;
-      return acc;
+      return { ...acc, [`  ${diffKey}`]: preValue };
     } if (preValue === undefined) {
-      acc[`+ ${diffKey}`] = curValue;
-      return acc;
+      return { ...acc, [`+ ${diffKey}`]: curValue };
     } if (curValue === undefined) {
-      acc[`- ${diffKey}`] = preValue;
-      return acc;
+      return { ...acc, [`- ${diffKey}`]: preValue };
     }
-    acc[`- ${diffKey}`] = preValue;
-    acc[`+ ${diffKey}`] = curValue;
-    return acc;
+    return { ...acc, [`- ${diffKey}`]: preValue, [`+ ${diffKey}`]: curValue };
   }, {});
   return diffAsObj;
 };
@@ -38,16 +32,14 @@ const stringify = (data, replacer = ' ', spacesCount = 4) => {
 
     const entries = Object.entries(currentData);
     const indentSize = spacesCount * level;
-    let currentIndent;
-    let bracketIndent;
+    const bracketIndent = replacer.repeat(indentSize - spacesCount);
     const result = entries.reduce((acc, [key, value]) => {
       if (key.startsWith('  ') || key.startsWith('+ ') || key.startsWith('- ')) {
-        currentIndent = replacer.repeat(indentSize - 2);
-        bracketIndent = replacer.repeat(indentSize - spacesCount);
-      } else {
-        currentIndent = replacer.repeat(indentSize);
-        bracketIndent = replacer.repeat(indentSize - spacesCount);
+        const currentIndent = replacer.repeat(indentSize - 2);
+        const newAcc = `${acc}\n${currentIndent}${key}: ${iter(value, level + 1)}`;
+        return newAcc;
       }
+      const currentIndent = replacer.repeat(indentSize);
       const newAcc = `${acc}\n${currentIndent}${key}: ${iter(value, level + 1)}`;
       return newAcc;
     }, '');
