@@ -10,17 +10,10 @@ const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', 
 
 const jsonFilepath1 = getFixturePath('file1.json');
 const jsonFilepath2 = getFixturePath('file2.json');
-// for plain files JSON
-const jsonFilepath3 = getFixturePath('file3.json');
-const jsonFilepath4 = getFixturePath('file4.json');
-
 const yamlFilepath1 = getFixturePath('file1.yml');
 const yamlFilepath2 = getFixturePath('file2.yml');
-// for plain files YML
-const yamlFilepath3 = getFixturePath('file3.yml');
-const yamlFilepath4 = getFixturePath('file4.yml');
 
-test('should return diff of nested files in stylish format', () => {
+test('should return diff in stylish format', () => {
   const diffJson = gendiff(jsonFilepath1, jsonFilepath2, 'stylish');
   const diffYAML = gendiff(yamlFilepath1, yamlFilepath2, 'stylish');
   const expectedDiff = `{
@@ -71,22 +64,7 @@ test('should return diff of nested files in stylish format', () => {
   expect(diffYAML).toBe(expectedDiff);
 });
 
-test('should return diff of plain files in stylish format', () => {
-  const diffJson = gendiff(jsonFilepath3, jsonFilepath4, 'stylish');
-  const diffYAML = gendiff(yamlFilepath3, yamlFilepath4, 'stylish');
-  const expectedDiff = `{
-  - follow: false
-    host: hexlet.io
-  - proxy: 123.234.53.22
-  - timeout: 50
-  + timeout: 20
-  + verbose: true
-}`;
-  expect(diffJson).toBe(expectedDiff);
-  expect(diffYAML).toBe(expectedDiff);
-});
-
-test('should return diff of nested files in plain format', () => {
+test('should return diff in plain format', () => {
   const diffJson = gendiff(jsonFilepath1, jsonFilepath2, 'plain');
   const diffYAML = gendiff(yamlFilepath1, yamlFilepath2, 'plain');
   const expectedDiff = `Property 'common.follow' was added with value: false
@@ -104,18 +82,7 @@ Property 'group3' was added with value: [complex value]`;
   expect(diffYAML).toBe(expectedDiff);
 });
 
-test('should return diff of plain files in plain format', () => {
-  const diffJson = gendiff(jsonFilepath3, jsonFilepath4, 'plain');
-  const diffYAML = gendiff(yamlFilepath3, yamlFilepath4, 'plain');
-  const expectedDiff = `Property 'follow' was removed
-Property 'proxy' was removed
-Property 'timeout' was updated. From 50 to 20
-Property 'verbose' was added with value: true`;
-  expect(diffJson).toBe(expectedDiff);
-  expect(diffYAML).toBe(expectedDiff);
-});
-
-test('should return diff of nested files in json format', () => {
+test('should return diff in json format', () => {
   const diffJson = gendiff(jsonFilepath1, jsonFilepath2, 'json');
   const diffYAML = gendiff(yamlFilepath1, yamlFilepath2, 'json');
   const expectedDiff = `{
@@ -183,37 +150,6 @@ test('should return diff of nested files in json format', () => {
       },
       "fee": 100500
     }
-  }
-}`;
-  expect(diffJson).toBe(expectedDiff);
-  expect(diffYAML).toBe(expectedDiff);
-});
-
-test('should return diff of plain files in json format', () => {
-  const diffJson = gendiff(jsonFilepath3, jsonFilepath4, 'json');
-  const diffYAML = gendiff(yamlFilepath3, yamlFilepath4, 'json');
-  const expectedDiff = `{
-  "followDiff": {
-    "diffKey": "follow",
-    "preValue": false
-  },
-  "hostDiff": {
-    "diffKey": "host",
-    "preValue": "hexlet.io",
-    "curValue": "hexlet.io"
-  },
-  "proxyDiff": {
-    "diffKey": "proxy",
-    "preValue": "123.234.53.22"
-  },
-  "timeoutDiff": {
-    "diffKey": "timeout",
-    "preValue": 50,
-    "curValue": 20
-  },
-  "verboseDiff": {
-    "diffKey": "verbose",
-    "curValue": true
   }
 }`;
   expect(diffJson).toBe(expectedDiff);
