@@ -6,6 +6,8 @@ export default (filepath) => {
   const absFilepath = path.resolve(process.cwd(), filepath);
   const extention = path.extname(absFilepath);
   const content = fs.readFileSync(absFilepath, 'utf8');
-  const result = (extention.includes('json')) ? JSON.parse(content) : yaml.load(content);
-  return result;
+  if (extention.includes('json')) {
+    return JSON.parse(content);
+  }
+  return yaml.load(content);
 };
