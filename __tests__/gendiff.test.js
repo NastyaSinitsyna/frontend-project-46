@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { describe, expect, test } from '@jest/globals';
+import { expect, test } from '@jest/globals';
 import url from 'url';
 import gendiff from '../index.js';
 
@@ -19,65 +19,36 @@ const expectedStylishDiff = getFileContent('expected.stylish.diff.txt');
 const expectedPlainDiff = getFileContent('expected.plain.diff.txt');
 const expectedJsonDiff = getFileContent('expected.json.diff.txt');
 
-describe.each([
+test.each([
   {
-    a: jsonFilepath1,
-    b: jsonFilepath2,
+    format: 'stylish',
     expected: expectedStylishDiff,
   },
   {
-    a: yamlFilepath1,
-    b: yamlFilepath2,
+    format: 'plain',
+    expected: expectedPlainDiff,
+  },
+  {
+    format: 'json',
+    expected: expectedJsonDiff,
+  },
+])('gendiff in $format format for json files', ({ format, expected }) => {
+  expect(gendiff(jsonFilepath1, jsonFilepath2, format)).toBe(expected);
+});
+
+test.each([
+  {
+    format: 'stylish',
     expected: expectedStylishDiff,
   },
-])('gendiff in stylish format', ({ a, b, expected }) => {
-  test('should return stylish diff for json files', () => {
-    expect(gendiff(a, b, 'stylish')).toBe(expected);
-  });
-
-  test('should return stylish diff for yaml files', () => {
-    expect(gendiff(a, b, 'stylish')).toBe(expected);
-  });
-});
-
-describe.each([
   {
-    a: jsonFilepath1,
-    b: jsonFilepath2,
+    format: 'plain',
     expected: expectedPlainDiff,
   },
   {
-    a: yamlFilepath1,
-    b: yamlFilepath2,
-    expected: expectedPlainDiff,
-  },
-])('gendiff in plain format', ({ a, b, expected }) => {
-  test('should return plain diff for json files', () => {
-    expect(gendiff(a, b, 'plain')).toBe(expected);
-  });
-
-  test('should return plain diff for yaml files', () => {
-    expect(gendiff(a, b, 'plain')).toBe(expected);
-  });
-});
-
-describe.each([
-  {
-    a: jsonFilepath1,
-    b: jsonFilepath2,
+    format: 'json',
     expected: expectedJsonDiff,
   },
-  {
-    a: yamlFilepath1,
-    b: yamlFilepath2,
-    expected: expectedJsonDiff,
-  },
-])('gendiff in json format', ({ a, b, expected }) => {
-  test('should return json diff for json files', () => {
-    expect(gendiff(a, b, 'json')).toBe(expected);
-  });
-
-  test('should return json diff for yaml files', () => {
-    expect(gendiff(a, b, 'json')).toBe(expected);
-  });
+])('gendiff in $format format for yaml files', ({ format, expected }) => {
+  expect(gendiff(yamlFilepath1, yamlFilepath2, format)).toBe(expected);
 });
