@@ -20,26 +20,26 @@ const formatValue = (value) => {
 };
 
 const plain = (diff) => {
-  const data = Object.values(diff);
-  const formattedDiff = data
-    .map((dataItem) => {
-      const { diffKey, preValue, curValue } = dataItem;
-      if (typeof curValue === 'object' && typeof preValue === 'object') {
-        const newData = gendiff(getFullKey(diffKey, preValue), getFullKey(diffKey, curValue));
+  const formattedDiff = diff
+    .map((diffItem) => {
+      const diffKey = Object.keys(diffItem).toString();
+      const diffData = diffItem[diffKey];
+      const { status, preValue, curValue } = diffData;
+      if (Array.isArray(diffData)) {
+        const newData = diffData.map((diff) => getFullKey(diffKey, diff));
         return plain(newData);
       }
-      if (preValue === undefined) {
+      if (status === 'added') {
         return `Property '${diffKey}' was added with value: ${formatValue(curValue)}`;
       }
-      if (curValue === undefined) {
+      if (status === 'removed') {
         return `Property '${diffKey}' was removed`;
       }
-      if (preValue !== curValue) {
+      if (status === 'changed') {
         return `Property '${diffKey}' was updated. From ${formatValue(preValue)} to ${formatValue(curValue)}`;
       }
-      return 'No change';
     })
-    .filter((dataItem) => dataItem !== 'No change');
+    .filter((diffItem) => typeof diffItem === 'string');
   const result = formattedDiff.join('\n');
   return result;
 };

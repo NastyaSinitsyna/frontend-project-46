@@ -1,16 +1,17 @@
 import gendiff from '../gendiff.js';
 
 const formObjDiff = (diff) => {
-  const data = Object.values(diff);
-  const diffAsObj = data.reduce((acc, { diffKey, preValue, curValue }) => {
-    if (typeof preValue === 'object' && typeof curValue === 'object') {
-      return { ...acc, [`  ${diffKey}`]: formObjDiff(gendiff(preValue, curValue)) };
-    }
-    if (preValue === curValue) {
+  const diffAsObj = diff.reduce((acc, diffItem) => {
+    const diffKey = Object.keys(diffItem).toString();
+    const diffData = diffItem[diffKey];
+    const { status, preValue, curValue } = diffData;
+    if (Array.isArray(diffData)) {
+      return { ...acc, [`  ${diffKey}`]: formObjDiff(diffData) };
+    } if (status === 'unchanged') {
       return { ...acc, [`  ${diffKey}`]: preValue };
-    } if (preValue === undefined) {
+    } if (status === 'added') {
       return { ...acc, [`+ ${diffKey}`]: curValue };
-    } if (curValue === undefined) {
+    } if (status === 'removed') {
       return { ...acc, [`- ${diffKey}`]: preValue };
     }
     return { ...acc, [`- ${diffKey}`]: preValue, [`+ ${diffKey}`]: curValue };
