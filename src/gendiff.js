@@ -8,23 +8,18 @@ const gendiff = (content1, content2) => {
     const preValue = content1[diffKey];
     const curValue = content2[diffKey];
     if (typeof curValue === 'object' && typeof preValue === 'object') {
-      const result = { [`${diffKey}`]: gendiff(preValue, curValue) };
-      return result;
+      return { [`${diffKey}`]: gendiff(preValue, curValue) };
     }
     if (preValue === undefined) {
-      const result = { [`${diffKey}`]: { status: 'added', preValue, curValue } };
-      return result;
+      return { [`${diffKey}`]: { status: 'added', preValue, curValue } };
     }
     if (curValue === undefined) {
-      const result = { [`${diffKey}`]: { status: 'removed', preValue, curValue } };
-      return result;
+      return { [`${diffKey}`]: { status: 'removed', preValue, curValue } };
     }
     if (preValue !== curValue) {
-      const result = { [`${diffKey}`]: { status: 'changed', preValue, curValue } };
-      return result;
+      return { [`${diffKey}`]: { status: 'changed', preValue, curValue } };
     }
-    const result = { [`${diffKey}`]: { status: 'unchanged', preValue, curValue } };
-    return result;
+    return { [`${diffKey}`]: { status: 'unchanged', preValue, curValue } };
   });
   return diff;
 };
