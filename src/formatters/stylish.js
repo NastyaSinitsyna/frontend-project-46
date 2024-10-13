@@ -1,5 +1,3 @@
-import gendiff from '../gendiff.js';
-
 const formObjDiff = (diff) => {
   const diffAsObj = diff.reduce((acc, diffItem) => {
     const diffKey = Object.keys(diffItem).toString();

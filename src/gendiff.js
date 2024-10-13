@@ -23,7 +23,7 @@ const gendiff = (content1, content2) => {
       const result = { [`${diffKey}`]: { status: 'changed', preValue, curValue } };
       return result;
     }
-    const result = { [`${diffKey}`]: { status: 'unchanged', preValue, curValue}  };
+    const result = { [`${diffKey}`]: { status: 'unchanged', preValue, curValue } };
     return result;
   });
   return diff;

@@ -1,5 +1,3 @@
-import gendiff from '../gendiff.js';
-
 export const getFullKey = (root, coll) => {
   const entries = Object.entries(coll);
   const newColl = entries.reduce((acc, [key, value]) => {
@@ -26,7 +24,7 @@ const plain = (diff) => {
       const diffData = diffItem[diffKey];
       const { status, preValue, curValue } = diffData;
       if (Array.isArray(diffData)) {
-        const newData = diffData.map((diff) => getFullKey(diffKey, diff));
+        const newData = diffData.map((innerDiff) => getFullKey(diffKey, innerDiff));
         return plain(newData);
       }
       if (status === 'added') {
@@ -38,6 +36,7 @@ const plain = (diff) => {
       if (status === 'changed') {
         return `Property '${diffKey}' was updated. From ${formatValue(preValue)} to ${formatValue(curValue)}`;
       }
+      return diffItem;
     })
     .filter((diffItem) => typeof diffItem === 'string');
   const result = formattedDiff.join('\n');
