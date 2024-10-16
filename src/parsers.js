@@ -2,8 +2,10 @@ import yaml from 'js-yaml';
 
 export default (fileData) => {
   const { content, extention } = fileData;
-  if (extention.includes('json')) {
-    return JSON.parse(content);
+  switch (extention) {
+    case 'json':
+      return JSON.parse(content);
+    default:
+      return yaml.load(content);
   }
-  return yaml.load(content);
 };
