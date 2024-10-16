@@ -1,12 +1,3 @@
-export const getFullKey = (root, coll) => {
-  const entries = Object.entries(coll);
-  const newColl = entries.reduce((acc, [key, value]) => {
-    const newAcc = { ...acc, [`${root}.${key}`]: value };
-    return newAcc;
-  }, {});
-  return newColl;
-};
-
 const formatValue = (value) => {
   if (typeof value === 'string') {
     return `'${value}'`;
@@ -20,23 +11,23 @@ const formatValue = (value) => {
 const plain = (diff) => {
   const formattedDiff = diff
     .map((diffItem) => {
-      const diffKey = Object.keys(diffItem).toString();
-      const diffData = diffItem[diffKey];
-      const { status, preValue, curValue } = diffData;
-      if (Array.isArray(diffData)) {
-        const newData = diffData.map((innerDiff) => getFullKey(diffKey, innerDiff));
-        return plain(newData);
+      const { key, status, children, preValue, curValue } = diffItem;
+      switch (status) {
+        case 'nested':
+          const newData = children.map((child) => {
+              child.key = `${key}.${child.key}`;
+              return child;
+            });
+            return plain(newData);
+        case 'added':
+          return `Property '${key}' was added with value: ${formatValue(curValue)}`;
+        case 'removed':
+          return `Property '${key}' was removed`;
+        case 'changed':
+          return `Property '${key}' was updated. From ${formatValue(preValue)} to ${formatValue(curValue)}`;
+        default:
+          return diffItem;
       }
-      if (status === 'added') {
-        return `Property '${diffKey}' was added with value: ${formatValue(curValue)}`;
-      }
-      if (status === 'removed') {
-        return `Property '${diffKey}' was removed`;
-      }
-      if (status === 'changed') {
-        return `Property '${diffKey}' was updated. From ${formatValue(preValue)} to ${formatValue(curValue)}`;
-      }
-      return diffItem;
     })
     .filter((diffItem) => typeof diffItem === 'string');
   const result = formattedDiff.join('\n');
