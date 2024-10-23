@@ -8,12 +8,10 @@ const formatValue = (value) => {
   return value;
 };
 
-export const getFullKey = (root, data) => {
-  return data.map((item) => {
-    const result = { ...item, key: `${root}.${item.key}` };
-    return result;
-  });
-};
+export const getFullKey = (root, data) => data.map((item) => {
+  const result = { ...item, key: `${root}.${item.key}` };
+  return result;
+});
 
 const plain = (diff) => {
   const formattedDiff = diff
