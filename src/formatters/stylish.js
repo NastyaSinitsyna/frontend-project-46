@@ -1,18 +1,19 @@
 const formObjDiff = (diff) => {
   const diffAsObj = diff.reduce((acc, diffItem) => {
-    const diffKey = Object.keys(diffItem).toString();
-    const diffData = diffItem[diffKey];
-    const { status, preValue, curValue } = diffData;
-    if (Array.isArray(diffData)) {
-      return { ...acc, [`  ${diffKey}`]: formObjDiff(diffData) };
-    } if (status === 'unchanged') {
-      return { ...acc, [`  ${diffKey}`]: preValue };
-    } if (status === 'added') {
-      return { ...acc, [`+ ${diffKey}`]: curValue };
-    } if (status === 'removed') {
-      return { ...acc, [`- ${diffKey}`]: preValue };
+    const {
+      key, status, children, preValue, curValue,
+    } = diffItem;
+    if (status === 'nested') {
+      return { ...acc, [`  ${key}`]: formObjDiff(children) };
     }
-    return { ...acc, [`- ${diffKey}`]: preValue, [`+ ${diffKey}`]: curValue };
+    if (status === 'unchanged') {
+      return { ...acc, [`  ${key}`]: curValue };
+    } if (status === 'added') {
+      return { ...acc, [`+ ${key}`]: curValue };
+    } if (status === 'removed') {
+      return { ...acc, [`- ${key}`]: preValue };
+    }
+    return { ...acc, [`- ${key}`]: preValue, [`+ ${key}`]: curValue };
   }, {});
   return diffAsObj;
 };
@@ -49,3 +50,48 @@ const stringify = (data, replacer = ' ', spacesCount = 4) => {
 };
 
 export default (data) => stringify(formObjDiff(data));
+
+// const makeStrings = (diff) => {
+//   const data = diff.map((diffItem) => {
+//     const { key, status, children, preValue, curValue } = diffItem;
+//     if (status === 'nested') {
+//       const result = `  ${key}: ${makeStrings(children)}`;
+//       console.log(result);
+//       return result;
+//     }
+//     if (status === 'unchanged') {
+//       const result = `  ${key}: ${curValue}`;
+//       console.log(result);
+//       return result;
+//     } else if (status === 'added') {
+//       const result = `+ ${key}: ${curValue}`;
+//       console.log(result);
+//       return result;
+//     } else if (status === 'removed') {
+//       const result = `- ${key}: ${preValue}`;
+//       console.log(result);
+//       return result;
+//     } else {
+//     const result = [`- ${key}: ${preValue}`, `+ ${key}: ${curValue}`];
+//     console.log(result);
+//     return result;
+//     }
+//   });
+//   return data;
+// };
+
+// const stylish = (diff, replacer = ' ', spacesCount = 4) => {
+//   const iter = (data, level) => {
+//     const indentSize = spacesCount * level;
+//     const bracketIndent = replacer.repeat(indentSize - spacesCount);
+//     const currentIndent = replacer.repeat(indentSize - 2);
+//     const newData = makeStrings(data);
+//     // console.log(newData);
+//     const result = newData.map((dataItem) => `\n${currentIndent}${dataItem}`);
+//     console.log(result);
+//     return `{${result}\n${bracketIndent}}`;
+//   }
+//   return iter(diff, 1);
+// };
+
+// export default stylish;

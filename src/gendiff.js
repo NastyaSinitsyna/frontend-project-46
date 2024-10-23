@@ -17,7 +17,9 @@ const gendiff = (content1, content2) => {
       return { key, status: 'removed', preValue };
     }
     if (preValue !== curValue) {
-      return { key, status: 'changed', preValue, curValue };
+      return {
+        key, status: 'changed', preValue, curValue,
+      };
     }
     return { key, status: 'unchanged', curValue };
   });

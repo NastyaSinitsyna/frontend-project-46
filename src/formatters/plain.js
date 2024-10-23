@@ -8,17 +8,23 @@ const formatValue = (value) => {
   return value;
 };
 
+export const getFullKey = (root, data) => {
+  const result = data.map((item) => {
+    const { key, ...rest } = item;
+    return { ...rest, key: `${root}.${item.key}` };
+  });
+  return result;
+};
+
 const plain = (diff) => {
   const formattedDiff = diff
     .map((diffItem) => {
-      const { key, status, children, preValue, curValue } = diffItem;
+      const {
+        key, status, children, preValue, curValue,
+      } = diffItem;
       switch (status) {
         case 'nested':
-          const newData = children.map((child) => {
-              child.key = `${key}.${child.key}`;
-              return child;
-            });
-            return plain(newData);
+          return plain(getFullKey(key, children));
         case 'added':
           return `Property '${key}' was added with value: ${formatValue(curValue)}`;
         case 'removed':
