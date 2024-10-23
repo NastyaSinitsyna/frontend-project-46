@@ -20,44 +20,14 @@ const expectedPlainDiff = getFileContent('expected.plain.diff.txt');
 const expectedJsonDiff = getFileContent('expected.json.diff.txt');
 
 test.each([
-  {
-    filePath1: jsonFilepath1,
-    filePath2: jsonFilepath2,
-    format: 'stylish',
-    expected: expectedStylishDiff,
-  },
-  {
-    filePath1: yamlFilepath1,
-    filePath2: yamlFilepath2,
-    format: 'stylish',
-    expected: expectedStylishDiff,
-  },
-  {
-    filePath1: jsonFilepath1,
-    filePath2: jsonFilepath2,
-    format: 'plain',
-    expected: expectedPlainDiff,
-  },
-  {
-    filePath1: yamlFilepath1,
-    filePath2: yamlFilepath2,
-    format: 'plain',
-    expected: expectedPlainDiff,
-  },
-  {
-    filePath1: jsonFilepath1,
-    filePath2: jsonFilepath2,
-    format: 'json',
-    expected: expectedJsonDiff,
-  },
-  {
-    filePath1: yamlFilepath1,
-    filePath2: yamlFilepath2,
-    format: 'json',
-    expected: expectedJsonDiff,
-  },
-])('gendiff in $format format', ({
-  filePath1, filePath2, format, expected,
-}) => {
-  expect(gendiff(filePath1, filePath2, format)).toBe(expected);
+  'stylish',
+  'plain',
+  'json',
+])('gendiff in $format format', (format) => {
+  expect(gendiff(jsonFilepath1, jsonFilepath2, format)).toBe(expectedStylishDiff);
+  expect(gendiff(yamlFilepath1, yamlFilepath2, format)).toBe(expectedStylishDiff);
+  expect(gendiff(jsonFilepath1, jsonFilepath2, format)).toBe(expectedPlainDiff);
+  expect(gendiff(yamlFilepath1, yamlFilepath2, format)).toBe(expectedPlainDiff);
+  expect(gendiff(jsonFilepath1, jsonFilepath2, format)).toBe(expectedJsonDiff);
+  expect(gendiff(yamlFilepath1, yamlFilepath2, format)).toBe(expectedJsonDiff);
 });
