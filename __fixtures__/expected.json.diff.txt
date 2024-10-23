@@ -1,125 +1,116 @@
 [
   {
-    "common": [
+    "key": "common",
+    "status": "nested",
+    "children": [
       {
-        "follow": {
-          "status": "added",
-          "curValue": false
+        "key": "follow",
+        "status": "added",
+        "curValue": false
+      },
+      {
+        "key": "setting1",
+        "status": "unchanged",
+        "curValue": "Value 1"
+      },
+      {
+        "key": "setting2",
+        "status": "removed",
+        "preValue": 200
+      },
+      {
+        "key": "setting3",
+        "status": "changed",
+        "preValue": true,
+        "curValue": null
+      },
+      {
+        "key": "setting4",
+        "status": "added",
+        "curValue": "blah blah"
+      },
+      {
+        "key": "setting5",
+        "status": "added",
+        "curValue": {
+          "key5": "value5"
         }
       },
       {
-        "setting1": {
-          "status": "unchanged",
-          "preValue": "Value 1",
-          "curValue": "Value 1"
-        }
-      },
-      {
-        "setting2": {
-          "status": "removed",
-          "preValue": 200
-        }
-      },
-      {
-        "setting3": {
-          "status": "changed",
-          "preValue": true,
-          "curValue": null
-        }
-      },
-      {
-        "setting4": {
-          "status": "added",
-          "curValue": "blah blah"
-        }
-      },
-      {
-        "setting5": {
-          "status": "added",
-          "curValue": {
-            "key5": "value5"
-          }
-        }
-      },
-      {
-        "setting6": [
+        "key": "setting6",
+        "status": "nested",
+        "children": [
           {
-            "doge": [
+            "key": "doge",
+            "status": "nested",
+            "children": [
               {
-                "wow": {
-                  "status": "changed",
-                  "preValue": "",
-                  "curValue": "so much"
-                }
+                "key": "wow",
+                "status": "changed",
+                "preValue": "",
+                "curValue": "so much"
               }
             ]
           },
           {
-            "key": {
-              "status": "unchanged",
-              "preValue": "value",
-              "curValue": "value"
-            }
+            "key": "key",
+            "status": "unchanged",
+            "curValue": "value"
           },
           {
-            "ops": {
-              "status": "added",
-              "curValue": "vops"
-            }
+            "key": "ops",
+            "status": "added",
+            "curValue": "vops"
           }
         ]
       }
     ]
   },
   {
-    "group1": [
+    "key": "group1",
+    "status": "nested",
+    "children": [
       {
-        "baz": {
-          "status": "changed",
-          "preValue": "bas",
-          "curValue": "bars"
-        }
+        "key": "baz",
+        "status": "changed",
+        "preValue": "bas",
+        "curValue": "bars"
       },
       {
-        "foo": {
-          "status": "unchanged",
-          "preValue": "bar",
-          "curValue": "bar"
-        }
+        "key": "foo",
+        "status": "unchanged",
+        "curValue": "bar"
       },
       {
-        "nest": {
-          "status": "changed",
-          "preValue": {
-            "key": "value"
-          },
-          "curValue": "str"
-        }
+        "key": "nest",
+        "status": "changed",
+        "preValue": {
+          "key": "value"
+        },
+        "curValue": "str"
       }
     ]
   },
   {
-    "group2": {
-      "status": "removed",
-      "preValue": {
-        "abc": 12345,
-        "deep": {
-          "id": 45
-        }
+    "key": "group2",
+    "status": "removed",
+    "preValue": {
+      "abc": 12345,
+      "deep": {
+        "id": 45
       }
     }
   },
   {
-    "group3": {
-      "status": "added",
-      "curValue": {
-        "deep": {
-          "id": {
-            "number": 45
-          }
-        },
-        "fee": 100500
-      }
+    "key": "group3",
+    "status": "added",
+    "curValue": {
+      "deep": {
+        "id": {
+          "number": 45
+        }
+      },
+      "fee": 100500
     }
   }
 ]
