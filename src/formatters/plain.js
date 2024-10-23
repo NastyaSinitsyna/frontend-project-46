@@ -9,11 +9,10 @@ const formatValue = (value) => {
 };
 
 export const getFullKey = (root, data) => {
-  const result = data.map((item) => {
-    const { key, ...rest } = item;
-    return { ...rest, key: `${root}.${item.key}` };
+  return data.map((item) => {
+    const result = { ...item, key: `${root}.${item.key}` };
+    return result;
   });
-  return result;
 };
 
 const plain = (diff) => {
