@@ -51,6 +51,17 @@
 
 // export default (data) => stringify(formObjDiff(data));
 
+const formatValue = (value, currentIndent, bracketIndent) => {
+  if (typeof value !== 'object' || value === null) {
+    return `${value}`;
+  }
+  if (typeof value === 'object') {
+    const entries = Object.entries(value);
+    const result = entries.map(([key, value]) => `${currentIndent + 1}  ${key}: ${value}`);
+    return `{\n${result}\n${bracketIndent}}`
+  }
+};
+
 const stylish = (diff, replacer = ' ', spacesCount = 4) => {
   const iter = (data, level) => {
     const indentSize = spacesCount * level;
@@ -64,13 +75,13 @@ const stylish = (diff, replacer = ' ', spacesCount = 4) => {
         case 'nested':
           return  `${replacer.repeat(indentSize)}${key}: ${iter(children, level + 1)}`;
         case 'added':
-          return `${currentIndent}+ ${key}: ${curValue}`;
+          return `${currentIndent}+ ${key}: ${formatValue(curValue, currentIndent,bracketIndent)}`;
         case 'removed':
-          return `${currentIndent}- ${key}: ${preValue}`;
+          return `${currentIndent}- ${key}: ${formatValue(preValue, currentIndent, bracketIndent)}`;
         case 'changed':
-          return `${currentIndent}- ${key}: ${preValue}\n${currentIndent}+ ${key}: ${curValue}`;
+          return `${currentIndent}- ${key}: ${formatValue(preValue, currentIndent, bracketIndent)}\n${currentIndent}+ ${key}: ${formatValue(curValue, currentIndent, bracketIndent)}`;
         default:
-          return `${currentIndent}  ${key}: ${curValue}`;
+          return `${currentIndent}  ${key}: ${formatValue(curValue, currentIndent, bracketIndent)}`;
       }
     });
     return `{\n${result.join('\n')}\n${bracketIndent}}`;
