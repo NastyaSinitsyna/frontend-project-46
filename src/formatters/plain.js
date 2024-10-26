@@ -28,8 +28,10 @@ const plain = (diff) => {
           return `Property '${key}' was removed`;
         case 'changed':
           return `Property '${key}' was updated. From ${formatValue(preValue)} to ${formatValue(curValue)}`;
-        default:
+        case 'unchanged':
           return diffItem;
+        default:
+          throw new Error('Unknown status');
       }
     })
     .filter((diffItem) => typeof diffItem === 'string');
