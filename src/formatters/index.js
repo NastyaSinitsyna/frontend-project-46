@@ -5,7 +5,6 @@ import gendiff from '../gendiff.js';
 import fileParse from '../parsers.js';
 import stylish from './stylish.js';
 import plain from './plain.js';
-import json from './json.js';
 
 const getFileData = (filepath) => {
   const absFilepath = path.resolve(process.cwd(), filepath);
@@ -24,7 +23,7 @@ export default (filepath1, filepath2, format = 'stylish') => {
     return plain(gendiff(content1, content2));
   }
   if (format === 'json') {
-    return json(gendiff(content1, content2));
+    return JSON.stringify(gendiff(content1, content2), null, 2);
   }
   return 'error: unknown format';
 };
