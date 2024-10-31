@@ -1,10 +1,7 @@
-const formIndent = (level) => {
-  const replacer = ' ';
-  const spacesCount = 4;
+const formIndent = (level, replacer = ' ', spacesCount = 4) => {
   const indentSize = spacesCount * level;
-  const bracketIndent = replacer.repeat(indentSize - spacesCount);
-  const currentIndent = replacer.repeat(indentSize - 2);
-  return { currentIndent, bracketIndent };
+  const indent = replacer.repeat(indentSize - 2);
+  return indent;
 };
 
 const formatValue = (data, level) => {
@@ -14,36 +11,36 @@ const formatValue = (data, level) => {
   }
   if (dataType === 'object') {
     const entries = Object.entries(data);
-    const { currentIndent, bracketIndent } = formIndent(level);
-    const result = entries.map(([key, value]) => `${currentIndent}  ${key}: ${formatValue(value, level + 1)}`);
-    return `{\n${result.join('\n')}\n${bracketIndent}}`;
+    const indent = formIndent(level);
+    const result = entries.map(([key, value]) => `${indent}  ${key}: ${formatValue(value, level + 1)}`);
+    return `{\n${result.join('\n')}\n${indent.slice(0, indent.length - 2)}}`;
   }
   throw new Error('Unknown data type');
 };
 
 const stylish = (diff) => {
   const iter = (data, level) => {
-    const { currentIndent, bracketIndent } = formIndent(level);
+    const indent = formIndent(level);
     const result = data.map((item) => {
       const {
         key, status, children, preValue, curValue,
       } = item;
       switch (status) {
         case 'nested':
-          return `${currentIndent}  ${key}: ${iter(children, level + 1)}`;
+          return `${indent}  ${key}: ${iter(children, level + 1)}`;
         case 'added':
-          return `${currentIndent}+ ${key}: ${formatValue(curValue, level + 1)}`;
+          return `${indent}+ ${key}: ${formatValue(curValue, level + 1)}`;
         case 'removed':
-          return `${currentIndent}- ${key}: ${formatValue(preValue, level + 1)}`;
+          return `${indent}- ${key}: ${formatValue(preValue, level + 1)}`;
         case 'changed':
-          return `${currentIndent}- ${key}: ${formatValue(preValue, level + 1)}\n${currentIndent}+ ${key}: ${formatValue(curValue, level + 1)}`;
+          return `${indent}- ${key}: ${formatValue(preValue, level + 1)}\n${indent}+ ${key}: ${formatValue(curValue, level + 1)}`;
         case 'unchanged':
-          return `${currentIndent}  ${key}: ${formatValue(curValue, level + 1)}`;
+          return `${indent}  ${key}: ${formatValue(curValue, level + 1)}`;
         default:
           throw new Error('Unknown status');
       }
     });
-    return `{\n${result.join('\n')}\n${bracketIndent}}`;
+    return `{\n${result.join('\n')}\n${indent.slice(0, indent.length - 2)}}`;
   };
   return iter(diff, 1);
 };
