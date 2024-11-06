@@ -1,6 +1,6 @@
 const formIndent = (level, replacer = ' ', spacesCount = 4) => {
-  const indentSize = spacesCount * level;
-  const indent = replacer.repeat(indentSize - 2);
+  const identSize = level >= 1 ? spacesCount * level - 2 : spacesCount * level;
+  const indent = replacer.repeat(identSize);
   return indent;
 };
 
@@ -13,7 +13,7 @@ const formatValue = (data, level) => {
     const entries = Object.entries(data);
     const indent = formIndent(level);
     const result = entries.map(([key, value]) => `${indent}  ${key}: ${formatValue(value, level + 1)}`);
-    return `{\n${result.join('\n')}\n${indent.slice(0, indent.length - 2)}}`;
+    return `{\n${result.join('\n')}\n${formIndent(level - 1)}  }`;
   }
   throw new Error('Unknown data type');
 };
@@ -40,7 +40,7 @@ const stylish = (diff) => {
           throw new Error('Unknown status');
       }
     });
-    return `{\n${result.join('\n')}\n${indent.slice(0, indent.length - 2)}}`;
+    return `{\n${result.join('\n')}\n${formIndent(level - 1)}  }`;
   };
   return iter(diff, 1);
 };
