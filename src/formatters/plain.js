@@ -10,7 +10,9 @@ const formatValue = (value) => {
 
 export const getFullKey = (root, data) => {
   const alter = (coll, keys) => {
-    keys.push(coll.key);
+    if (coll.key) {
+      keys.push(coll.key);
+    }
     const newKey = keys.join('.');
     return { ...coll, key: newKey };
   };
@@ -23,7 +25,10 @@ const plain = (diff) => {
       const {
         key, status, children, preValue, curValue,
       } = diffItem;
+      console.log(diffItem);
       switch (status) {
+        case 'root':
+          return key === undefined ? plain(children) : plain(getFullKey(key, children));
         case 'nested':
           return plain(getFullKey(key, children));
         case 'added':

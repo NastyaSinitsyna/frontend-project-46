@@ -1,5 +1,5 @@
 const formIndent = (level, replacer = ' ', spacesCount = 4) => {
-  const identSize = level >= 1 ? spacesCount * level - 2 : spacesCount * level;
+  const identSize = spacesCount * level - 2;
   const indent = replacer.repeat(identSize);
   return indent;
 };
@@ -26,6 +26,8 @@ const stylish = (diff) => {
         key, status, children, preValue, curValue,
       } = item;
       switch (status) {
+        case 'root':
+          return `{\n${iter(children, level)}\n}`;
         case 'nested':
           return `${indent}  ${key}: ${iter(children, level + 1)}`;
         case 'added':
@@ -40,7 +42,7 @@ const stylish = (diff) => {
           throw new Error('Unknown status');
       }
     });
-    return `{\n${result.join('\n')}\n${formIndent(level - 1)}  }`;
+    return `${result.join('\n')}`;
   };
   return iter(diff, 1);
 };
