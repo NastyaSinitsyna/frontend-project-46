@@ -7,78 +7,63 @@
         "status": "nested",
         "children": [
           {
-            "status": "root",
+            "key": "follow",
+            "status": "added",
+            "curValue": false
+          },
+          {
+            "key": "setting1",
+            "status": "unchanged",
+            "curValue": "Value 1"
+          },
+          {
+            "key": "setting2",
+            "status": "removed",
+            "preValue": 200
+          },
+          {
+            "key": "setting3",
+            "status": "changed",
+            "preValue": true,
+            "curValue": null
+          },
+          {
+            "key": "setting4",
+            "status": "added",
+            "curValue": "blah blah"
+          },
+          {
+            "key": "setting5",
+            "status": "added",
+            "curValue": {
+              "key5": "value5"
+            }
+          },
+          {
+            "key": "setting6",
+            "status": "nested",
             "children": [
               {
-                "key": "follow",
-                "status": "added",
-                "curValue": false
-              },
-              {
-                "key": "setting1",
-                "status": "unchanged",
-                "curValue": "Value 1"
-              },
-              {
-                "key": "setting2",
-                "status": "removed",
-                "preValue": 200
-              },
-              {
-                "key": "setting3",
-                "status": "changed",
-                "preValue": true,
-                "curValue": null
-              },
-              {
-                "key": "setting4",
-                "status": "added",
-                "curValue": "blah blah"
-              },
-              {
-                "key": "setting5",
-                "status": "added",
-                "curValue": {
-                  "key5": "value5"
-                }
-              },
-              {
-                "key": "setting6",
+                "key": "doge",
                 "status": "nested",
                 "children": [
                   {
-                    "status": "root",
-                    "children": [
-                      {
-                        "key": "doge",
-                        "status": "nested",
-                        "children": [
-                          {
-                            "status": "root",
-                            "children": [
-                              {
-                                "key": "wow",
-                                "status": "changed",
-                                "preValue": "",
-                                "curValue": "so much"
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "key": "key",
-                        "status": "unchanged",
-                        "curValue": "value"
-                      },
-                      {
-                        "key": "ops",
-                        "status": "added",
-                        "curValue": "vops"
-                      }
-                    ]
+                    "key": "wow",
+                    "status": "changed",
+                    "preValue": "",
+                    "curValue": "so much"
                   }
                 ]
+              },
+              {
+                "key": "key",
+                "status": "unchanged",
+                "curValue": "value"
+              },
+              {
+                "key": "ops",
+                "status": "added",
+                "curValue": "vops"
               }
             ]
           }
@@ -89,28 +74,23 @@
         "status": "nested",
         "children": [
           {
-            "status": "root",
-            "children": [
-              {
-                "key": "baz",
-                "status": "changed",
-                "preValue": "bas",
-                "curValue": "bars"
-              },
-              {
-                "key": "foo",
-                "status": "unchanged",
-                "curValue": "bar"
-              },
-              {
-                "key": "nest",
-                "status": "changed",
-                "preValue": {
-                  "key": "value"
-                },
-                "curValue": "str"
-              }
-            ]
+            "key": "baz",
+            "status": "changed",
+            "preValue": "bas",
+            "curValue": "bars"
+          },
+          {
+            "key": "foo",
+            "status": "unchanged",
+            "curValue": "bar"
+          },
+          {
+            "key": "nest",
+            "status": "changed",
+            "preValue": {
+              "key": "value"
+            },
+            "curValue": "str"
           }
         ]
       },

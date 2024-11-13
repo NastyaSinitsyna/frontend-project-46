@@ -29,7 +29,7 @@ const stylish = (diff) => {
         case 'root':
           return `{\n${iter(children, level)}\n}`;
         case 'nested':
-          return `${indent}  ${key}: ${iter(children, level + 1)}`;
+          return `${indent}  ${key}: {\n${iter(children, level + 1)}\n${indent}  }`;
         case 'added':
           return `${indent}+ ${key}: ${formatValue(curValue, level + 1)}`;
         case 'removed':

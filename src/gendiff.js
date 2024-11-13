@@ -23,8 +23,7 @@ const gendiff = (content1, content2) => {
     }
     return { key, status: 'unchanged', curValue };
   });
-  const result = { status: 'root', children: diff };
-  return [result];
-  // return diff;
+  return diff;
 };
-export default gendiff;
+
+export default (content1, content2) => [{ status: 'root', children: gendiff(content1, content2) }];
