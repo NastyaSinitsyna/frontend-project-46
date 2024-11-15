@@ -5,25 +5,25 @@ const gendiff = (content1, content2) => {
   const keys2 = Object.keys(content2);
   const diffKeys = _.sortBy(_.union(keys1, keys2));
   const diff = diffKeys.map((key) => {
-    const preValue = content1[key];
-    const curValue = content2[key];
-    if (typeof curValue === 'object' && typeof preValue === 'object') {
-      return { key, status: 'nested', children: gendiff(preValue, curValue) };
+    const value1 = content1[key];
+    const value2 = content2[key];
+    if (typeof value2 === 'object' && typeof value1 === 'object') {
+      return { key, type: 'nested', children: gendiff(value1, value2) };
     }
-    if (preValue === undefined) {
-      return { key, status: 'added', curValue };
+    if (value1 === undefined) {
+      return { key, type: 'added', value2 };
     }
-    if (curValue === undefined) {
-      return { key, status: 'removed', preValue };
+    if (value2 === undefined) {
+      return { key, type: 'removed', value1 };
     }
-    if (preValue !== curValue) {
+    if (value1 !== value2) {
       return {
-        key, status: 'changed', preValue, curValue,
+        key, type: 'changed', value1, value2,
       };
     }
-    return { key, status: 'unchanged', curValue };
+    return { key, type: 'unchanged', value2 };
   });
   return diff;
 };
 
-export default (content1, content2) => [{ status: 'root', children: gendiff(content1, content2) }];
+export default (content1, content2) => [{ type: 'root', children: gendiff(content1, content2) }];

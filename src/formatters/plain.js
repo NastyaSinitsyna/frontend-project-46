@@ -15,23 +15,23 @@ const plain = (diff) => {
     const result = data
       .map((dataItem) => {
         const {
-          key, status, children, preValue, curValue,
+          key, type, children, value1, value2,
         } = dataItem;
-        switch (status) {
+        switch (type) {
           case 'root':
             return iter(children, keys);
           case 'nested':
             return iter(children, [...keys, key]);
           case 'added':
-            return `Property '${getFullKey(keys, key)}' was added with value: ${formatValue(curValue)}`;
+            return `Property '${getFullKey(keys, key)}' was added with value: ${formatValue(value2)}`;
           case 'removed':
             return `Property '${getFullKey(keys, key)}' was removed`;
           case 'changed':
-            return `Property '${getFullKey(keys, key)}' was updated. From ${formatValue(preValue)} to ${formatValue(curValue)}`;
+            return `Property '${getFullKey(keys, key)}' was updated. From ${formatValue(value1)} to ${formatValue(value2)}`;
           case 'unchanged':
             return null;
           default:
-            throw new Error('Unknown status');
+            throw new Error('Unknown diff type');
         }
       })
       .filter((dataItem) => typeof dataItem === 'string');

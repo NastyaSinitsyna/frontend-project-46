@@ -23,23 +23,23 @@ const stylish = (diff) => {
     const indent = formIndent(level);
     const result = data.map((item) => {
       const {
-        key, status, children, preValue, curValue,
+        key, type, children, value1, value2,
       } = item;
-      switch (status) {
+      switch (type) {
         case 'root':
           return `{\n${iter(children, level)}\n}`;
         case 'nested':
           return `${indent}  ${key}: {\n${iter(children, level + 1)}\n${indent}  }`;
         case 'added':
-          return `${indent}+ ${key}: ${formatValue(curValue, level + 1)}`;
+          return `${indent}+ ${key}: ${formatValue(value2, level + 1)}`;
         case 'removed':
-          return `${indent}- ${key}: ${formatValue(preValue, level + 1)}`;
+          return `${indent}- ${key}: ${formatValue(value1, level + 1)}`;
         case 'changed':
-          return `${indent}- ${key}: ${formatValue(preValue, level + 1)}\n${indent}+ ${key}: ${formatValue(curValue, level + 1)}`;
+          return `${indent}- ${key}: ${formatValue(value1, level + 1)}\n${indent}+ ${key}: ${formatValue(value2, level + 1)}`;
         case 'unchanged':
-          return `${indent}  ${key}: ${formatValue(curValue, level + 1)}`;
+          return `${indent}  ${key}: ${formatValue(value2, level + 1)}`;
         default:
-          throw new Error('Unknown status');
+          throw new Error('Unknown diff type');
       }
     });
     return `${result.join('\n')}`;
