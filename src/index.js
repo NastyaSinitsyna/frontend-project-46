@@ -7,9 +7,9 @@ import getFormat from './formatters/getFormat.js';
 
 const getFileData = (filepath) => {
   const absFilepath = path.resolve(process.cwd(), filepath);
-  const extention = path.extname(absFilepath);
+  const fileType = path.extname(absFilepath).slice(1);
   const content = fs.readFileSync(absFilepath, 'utf8');
-  return { content, extention };
+  return { content, fileType };
 };
 
 export default (filepath1, filepath2, format = 'stylish') => {

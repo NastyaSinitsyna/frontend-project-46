@@ -7,7 +7,7 @@ const gendiff = (content1, content2) => {
   const diff = diffKeys.map((key) => {
     const value1 = content1[key];
     const value2 = content2[key];
-    if (typeof value2 === 'object' && typeof value1 === 'object') {
+    if (_.isPlainObject(value1) && _.isPlainObject(value2)) {
       return { key, type: 'nested', children: gendiff(value1, value2) };
     }
     if (value1 === undefined) {
